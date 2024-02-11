@@ -31,7 +31,7 @@ export default function WeatherTableHead({
     const units = useContext(UnitsContext);
     //The header of the table
     const header = [
-        "DateTime",
+        "Date Time",
         "Weather State",
         `Temperature ${units === "celsius"?"(°C)" : "(F)"}`,
         "Surface Pressure (hPa)",
