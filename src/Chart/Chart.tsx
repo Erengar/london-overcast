@@ -1,6 +1,6 @@
 import { LineChart, ChartsReferenceLine } from "@mui/x-charts";
 import React from "react";
-import { LinearProgress } from "@mui/material";
+import { Box, LinearProgress } from "@mui/material";
 import useSWR from "swr";
 import { fetcher } from "../util/fetcher";
 import { latitude, longtitude, hourly } from "../util/constants";
@@ -37,9 +37,9 @@ const Chart = React.memo(() => {
             ) : error ? (
                 <div>Failed to load</div>
             ) : (
+                <Box width={"100%"} height={"60vh"}>
                 <LineChart
-                    height={400}
-                    width={1900}
+
                     xAxis={[
                         {
                             label: "Date Time",
@@ -58,7 +58,7 @@ const Chart = React.memo(() => {
                         },
                     ]}
                     sx={{ ml: { xs: 0, sm: 4 } }}
-                >
+                    >
                     <ChartsReferenceLine
                         x={date.setHours(date.getHours())}
                         label="Now"
@@ -68,8 +68,9 @@ const Chart = React.memo(() => {
                             strokeDasharray: "8,5",
                             strokeWidth: 2,
                         }}
-                    />
+                        />
                 </LineChart>
+            </Box>
             )}
         </>
     );

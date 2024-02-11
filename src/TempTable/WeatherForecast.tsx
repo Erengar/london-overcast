@@ -17,6 +17,8 @@ export default function WeatherForecast() {
         `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longtitude}&hourly=${hourly}&forecast_days=${futureDays}&past_days=${pastDays}`,
         fetcher,
         {
+            dedupingInterval: 0,
+
             onErrorRetry: (
                 _error,
                 _key,
@@ -29,6 +31,8 @@ export default function WeatherForecast() {
                 // Retry after 5 seconds
                 setTimeout(() => revalidate({ retryCount }), 5000);
             },
+            onSuccess: () => {console.log('Data fetched successfully')},
+
         }
     );
     return (

@@ -9,6 +9,7 @@ import { useState } from "react";
 import WeatherTableHead from "./WeatherTableHead";
 import WeatherTablePagination from "./WeatherTablePagination";
 import WeatherTableSearch from "./WeatherTableSearch";
+import { useEffect } from "react";
 
 export default function WeatherTable({ data }: { data: Weather[] }) {
     const [sort, setSort] = useState<string>("");
@@ -17,6 +18,10 @@ export default function WeatherTable({ data }: { data: Weather[] }) {
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(10);
     const [search, setSearch] = useState<string>("");
+    
+    useEffect(() => {
+        setNewData(data);
+    }, [data])
     return (
         <Container>
             <WeatherTableSearch
