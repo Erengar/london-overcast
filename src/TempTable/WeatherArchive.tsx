@@ -13,7 +13,7 @@ export default function WeatherArchive() {
     //This component holds the starting day of our query
     const [startDate, setStartDate] = useState<Dayjs | null>(dayjs().subtract(7, "day"));
     //This component holds the ending day of our query
-    const [endDate, setEndDate] = useState<Dayjs | null>(dayjs());
+    const [endDate, setEndDate] = useState<Dayjs | null>(dayjs().subtract(1, "day"))    ;
     //This context holds the units of the temperature
     const units = useContext(UnitsContext)
     const { data, error, isLoading } = useSWR(
