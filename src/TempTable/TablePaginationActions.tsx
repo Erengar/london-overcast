@@ -17,6 +17,7 @@ interface TablePaginationActionsProps {
     ) => void;
 }
 
+//This is custom pagination action for material ui table, to enable arrows navigating to beggining and end of the table
 export default function TablePaginationActions(
     props: TablePaginationActionsProps
 ) {

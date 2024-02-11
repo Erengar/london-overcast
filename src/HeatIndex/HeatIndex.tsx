@@ -10,12 +10,15 @@ import HeatIndexHistory from "./HeatIndexHistory";
 import React from "react";
 
 const HeatIndex = React.memo(() => {
+    //This holds the temperature and humidity
     const [temp, setTemp] = useState<HeatIndexForm>({
         temperature: "",
         unit: "C",
         humidity: "",
     });
+    //This holds calculated heat index
     const [heatIndex, setHeatIndex] = useState<string>("");
+    //This holds the error state, if the temperature entered is too low
     const [error, setError] = useState<boolean>(false);
     useEffect(() => {
         if (

@@ -2,10 +2,12 @@ import { List, ListItem, Typography, ListItemText, Box } from "@mui/material";
 import { useEffect, useState } from "react";
 
 export default function HeatIndexHistory() {
-    const [historyHeatIndex, setHistoryHeatIndex] = useState<number[]>([]);
+    //This holds the history of heat index, it mounts, get the history from local storage
+    const [historyHeatIndex, setHistoryHeatIndex] = useState<number[]>(
+        JSON.parse(localStorage.getItem("historyHeatIndex") || "[]")
+    );
+    //On component mount, listen for storage event
     useEffect(() => {
-        const historyHeatIndex = localStorage.getItem("historyHeatIndex");
-        setHistoryHeatIndex(JSON.parse(historyHeatIndex || "[]"));
         window.addEventListener("storage", () => {
             const historyHeatIndex = localStorage.getItem("historyHeatIndex");
             setHistoryHeatIndex(JSON.parse(historyHeatIndex || "[]"));

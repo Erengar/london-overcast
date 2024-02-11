@@ -6,8 +6,9 @@ import {
     Box,
 } from "@mui/material";
 import { visuallyHidden } from "@mui/utils";
-import React, { useEffect } from "react";
+import React, { useContext, useEffect } from "react";
 import { Weather } from "../util/schema";
+import { UnitsContext } from "../App";
 
 interface WeatherTableHeadProps {
     sort: string;
@@ -26,12 +27,15 @@ export default function WeatherTableHead({
     setNewData,
     newData,
 }: WeatherTableHeadProps) {
+    //This context holds the units of the temperature
+    const units = useContext(UnitsContext);
+    //The header of the table
     const header = [
         "DateTime",
         "Weather State",
-        "Temperature",
-        "Surface Pressure",
-        "Relative Humidity",
+        `Temperature ${units === "celsius"?"(°C)" : "(F)"}`,
+        "Surface Pressure (hPa)",
+        "Relative Humidity (%)",
     ];
     // Sort the data based on the sort and sortDirection states
     useEffect(() => {

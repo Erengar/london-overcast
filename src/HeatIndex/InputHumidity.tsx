@@ -11,9 +11,12 @@ export default function InputHumidity({ temp, setTemp }: InputHumidityProps) {
         <TextField
             label="Relative Humidity (%)"
             variant="outlined"
-            type="number"
             value={temp.humidity}
-            onChange={(e) => setTemp({ ...temp, humidity: e.target.value })}
+            onChange={(e) => {
+                if (isNaN(parseFloat(e.target.value)) && e.target.value !== "")
+                    return;
+                setTemp({ ...temp, humidity: e.target.value });
+            }}
             inputProps={{ min: "26.7", step: "1" }}
         />
     );

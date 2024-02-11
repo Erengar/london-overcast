@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import useSWR from "swr";
 import { fetcher } from "../util/fetcher";
 import WeatherSlider from "./WeatherSlider";
@@ -6,19 +6,21 @@ import WeatherTable from "./WeatherTable";
 import { Weather } from "../util/schema";
 import { Box, Skeleton, Alert, AlertTitle } from "@mui/material";
 import { latitude, longtitude, hourly } from "../util/constants";
+import { UnitsContext } from "../App";
 
 export default function WeatherForecast() {
     //This state holds the number of past days to fetch
     const [pastDays, setPastDays] = useState(3);
     //This state holds the number of future days to fetch
     const [futureDays, setFutureDays] = useState(7);
+    //This context holds the units of the temperature
+    const units = useContext(UnitsContext);
 
     const { data, error, isLoading } = useSWR(
-        `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longtitude}&hourly=${hourly}&forecast_days=${futureDays}&past_days=${pastDays}`,
+        `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longtitude}&hourly=${hourly}&forecast_days=${futureDays}&past_days=${pastDays}&temperature_unit=${units}`,
         fetcher,
         {
             dedupingInterval: 0,
-
             onErrorRetry: (
                 _error,
                 _key,
@@ -31,8 +33,6 @@ export default function WeatherForecast() {
                 // Retry after 5 seconds
                 setTimeout(() => revalidate({ retryCount }), 5000);
             },
-            onSuccess: () => {console.log('Data fetched successfully')},
-
         }
     );
     return (

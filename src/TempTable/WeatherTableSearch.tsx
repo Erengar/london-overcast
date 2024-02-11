@@ -2,6 +2,7 @@ import Fuse from "fuse.js";
 import { useEffect } from "react";
 import { Box, TextField, debounce } from "@mui/material";
 import { Weather } from "../util/schema";
+import SearchIcon from "@mui/icons-material/Search";
 
 interface WeatherTableSearchProps {
     search: string;
@@ -17,19 +18,21 @@ export default function WeatherTableSearch({
     setNewData,
 }: WeatherTableSearchProps) {
     useEffect(() => {
+        //If the search string is empty, display all the data
         if (search === "") {
             setNewData(data);
             return;
         }
         const fuse = new Fuse(data, {
             keys: ["time", "weather", "temperature", "pressure", "humidity"],
-            minMatchCharLength: 2,
+            //0.6 is the default value, but we want to make it more strict
             threshold: 0.3,
         });
         const result = fuse.search(search);
         setNewData(result.map((r) => r.item));
     }, [search]);
 
+    //Debounce the search to avoid unnecessary re-renders
     const handleSearch = debounce((e: React.ChangeEvent<HTMLInputElement>) => {
         setSearch(e.target.value);
     }, 400);
@@ -41,6 +44,9 @@ export default function WeatherTableSearch({
                 type="search"
                 onChange={handleSearch}
                 variant="standard"
+                InputProps={{
+                    endAdornment: <SearchIcon />,
+                }}
             />
         </Box>
     );

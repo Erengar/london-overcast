@@ -4,19 +4,22 @@ import { fetcher } from "../util/fetcher";
 import WeatherTable from "./WeatherTable";
 import { Weather } from "../util/schema";
 import { latitude, longtitude, hourly } from "../util/constants";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import dayjs, { Dayjs } from "dayjs";
+import { UnitsContext } from "../App";
 
 export default function WeatherArchive() {
-    const [startDate, setStartDate] = useState<Dayjs | null>(
-        dayjs().subtract(7, "day")
-    );
+    //This component holds the starting day of our query
+    const [startDate, setStartDate] = useState<Dayjs | null>(dayjs().subtract(7, "day"));
+    //This component holds the ending day of our query
     const [endDate, setEndDate] = useState<Dayjs | null>(dayjs());
+    //This context holds the units of the temperature
+    const units = useContext(UnitsContext)
     const { data, error, isLoading } = useSWR(
         `https://archive-api.open-meteo.com/v1/archive?latitude=${latitude}&longitude=${longtitude}&start_date=${startDate?.format(
             "YYYY-MM-DD"
-        )}&end_date=${endDate?.format("YYYY-MM-DD")}&hourly=${hourly}`,
+        )}&end_date=${endDate?.format("YYYY-MM-DD")}&hourly=${hourly}&temperature_unit=${units}`,
         fetcher,
         {
             onErrorRetry: (

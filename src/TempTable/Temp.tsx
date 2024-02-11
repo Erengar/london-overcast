@@ -5,6 +5,7 @@ import WeatherArchive from "./WeatherArchive";
 import { Box, Button } from "@mui/material";
 
 const Temp = React.memo(() => {
+    //This state determines whether to show the forecast or the archive
     const [archive, setArchive] = useState(false);
     return (
         <>

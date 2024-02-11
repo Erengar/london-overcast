@@ -13,14 +13,18 @@ export default function HeatIndexCalculate({
 }: HeatIndexCalculateProps) {
     const calculateHeatIndex = useCallback(() => {
         if (!temp.temperature || !temp.humidity) return;
+        //These values must first be converted to numbers
         const temperatureFloat = parseFloat(temp.temperature);
         const humidityFloat = parseFloat(temp.humidity);
+        //This should not be needed but just in case
         if (temp.unit === "C" && temperatureFloat < 26.7) return;
         if (temp.unit === "F" && temperatureFloat < 80) return;
+        //If the temperature is in Celsius, convert it to Fahrenheit
         let temperature = temperatureFloat;
         if (temp.unit === "C") {
             temperature = (9 / 5) * temperatureFloat + 32;
         }
+        //The formula to calculate heat index, we round to 4 decimal places
         const calculate = (
             -42.379 +
             2.04901523 * temperature +
