@@ -35,7 +35,7 @@ export default function WeatherTableSearch({
     }, 400);
 
     return (
-        <Box display="flex" justifyContent="center" marginTop={4}>
+        <Box display="flex" justifyContent="center">
             <TextField
                 label="Search"
                 type="search"

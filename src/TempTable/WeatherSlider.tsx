@@ -28,11 +28,13 @@ export default function WeatherSlider({
                 onChange={(_, value: number[] | number) => {
                     if (typeof value === "number") return;
                     if (value[0] > 0) value[0] = 0;
-                    if (value[1] < 0) value[1] = 0;
+                    if (value[1] < 1) value[1] = 1;
                     startTransition(() => setSliderValues(value));
                 }}
                 onChangeCommitted={(_, value: number[] | number) => {
                     if (typeof value === "number") return;
+                    if (value[0] > 0) value[0] = 0;
+                    if (value[1] < 1) value[1] = 1;
                     startTransition(() => {
                         setPastDays(-value[0]);
                         setFutureDays(value[1]);

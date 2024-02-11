@@ -3,11 +3,9 @@ import React from "react";
 import { LinearProgress } from "@mui/material";
 import useSWR from "swr";
 import { fetcher } from "../util/fetcher";
+import { latitude, longtitude, hourly } from "../util/constants";
+import dayjs from "dayjs";
 
-const latitude = "51.5085";
-const longtitude = "-0.1257";
-const hourly =
-    "temperature_2m,relative_humidity_2m,surface_pressure,weather_code";
 // Fetch 7 days of future data and 3 days of past data, we want no more than that in chart
 const futureDays = 7;
 const pastDays = 3;
@@ -46,10 +44,10 @@ const Chart = React.memo(() => {
                         {
                             label: "Date Time",
                             id: "Date Time",
-                            scaleType: "utc",
-                            data: data?.map((d) => new Date(d.time)),
+                            scaleType: "time",
+                            data: data?.map((d) => dayjs(d.time)),
                             valueFormatter(value) {
-                                return value.toLocaleString();
+                                return dayjs(value).format("DD/MM HH:mm");
                             },
                         },
                     ]}
@@ -62,7 +60,7 @@ const Chart = React.memo(() => {
                     sx={{ ml: { xs: 0, sm: 4 } }}
                 >
                     <ChartsReferenceLine
-                        x={date.setHours(date.getHours() + 1)}
+                        x={date.setHours(date.getHours())}
                         label="Now"
                         labelAlign="start"
                         lineStyle={{
